@@ -30,7 +30,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="AngularSpring" target="1.7" />
+      <module name="AngularSpring" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
