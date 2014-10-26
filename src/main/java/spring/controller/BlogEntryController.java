@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import spring.entities.BlogEntry;
 import spring.resources.BlogEntryResource;
-import spring.resources.BlogEntryResourceAsm;
+import spring.resources.asm.BlogEntryResourceAsm;
 import spring.services.BlogEntryService;
 
 @Controller
@@ -23,7 +23,7 @@ public class BlogEntryController {
             method = RequestMethod.GET)
     public ResponseEntity<BlogEntryResource> getBlogEntry(
             @PathVariable Long blogEntryId) {
-        BlogEntry entry = service.find(blogEntryId);
+        BlogEntry entry = service.findBlogEntry(blogEntryId);
         if(entry != null)
         {
             BlogEntryResource res = new BlogEntryResourceAsm().toResource(entry);
@@ -37,7 +37,7 @@ public class BlogEntryController {
             method = RequestMethod.DELETE)
     public ResponseEntity<BlogEntryResource> deleteBlogEntry(
             @PathVariable Long blogEntryId) {
-        BlogEntry entry = service.delete(blogEntryId);
+        BlogEntry entry = service.deleteBlogEntry(blogEntryId);
         if(entry != null)
         {
             BlogEntryResource res = new BlogEntryResourceAsm().toResource(entry);
@@ -51,7 +51,7 @@ public class BlogEntryController {
             method = RequestMethod.PUT)
     public ResponseEntity<BlogEntryResource> updateBlogEntry(
             @PathVariable Long blogEntryId, @RequestBody BlogEntryResource sentBlogEntry) {
-        BlogEntry updatedEntry = service.update(blogEntryId, sentBlogEntry.toBlogEntry());
+        BlogEntry updatedEntry = service.updateBlogEntry(blogEntryId, sentBlogEntry.toBlogEntry());
         if(updatedEntry != null)
         {
             BlogEntryResource res = new BlogEntryResourceAsm().toResource(updatedEntry);
@@ -60,5 +60,4 @@ public class BlogEntryController {
             return new ResponseEntity<BlogEntryResource>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
