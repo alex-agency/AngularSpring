@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AngularSpring.iml" filepath="$PROJECT_DIR$/AngularSpring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/angular-spring-app.iml" filepath="$PROJECT_DIR$/angular-spring-app.iml" />
     </modules>
   </component>
 </project>

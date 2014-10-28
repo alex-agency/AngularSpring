@@ -26,10 +26,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="angular-spring-app" />
         <module name="AngularSpring" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="angular-spring-app" target="1.7" />
       <module name="AngularSpring" target="1.8" />
     </bytecodeTargetLevel>
   </component>
