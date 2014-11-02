@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.entities.Account;
 import spring.repositories.AccountRepo;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,6 +38,9 @@ public class AccountRepoTest {
     @Transactional
     public void testFind()
     {
-        assertNotNull(repo.findAccount(account.getId()));
+        Account account = repo.findAccount(this.account.getId());
+        assertNotNull(account);
+        assertEquals(account.getName(), "name");
+        assertEquals(account.getPassword(), "password");
     }
 }

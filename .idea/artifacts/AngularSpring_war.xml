@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="AngularSpring:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="angular-spring-app-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="AngularSpring:war exploded" />
-    </root>
-  </artifact>
-</component>
