@@ -15,10 +15,14 @@ import spring.services.util.BlogList;
 import javax.persistence.Entity;
 import javax.persistence.PersistenceContext;
 
+@Service
+@Transactional
 public class BlogServiceImpl implements BlogService {
 
+    @Autowired
     private BlogRepo blogRepo;
 
+    @Autowired
     private BlogEntryRepo entryRepo;
 
     @Override

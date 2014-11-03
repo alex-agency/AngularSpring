@@ -1,5 +1,8 @@
 package spring.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spring.entities.Account;
 import spring.entities.Blog;
 import spring.repositories.AccountRepo;
@@ -11,15 +14,18 @@ import spring.services.exceptions.BlogExistsException;
 import spring.services.util.AccountList;
 import spring.services.util.BlogList;
 
+@Service
+@Transactional
 public class AccountServiceImpl implements AccountService {
 
+    @Autowired
     private AccountRepo accountRepo;
 
+    @Autowired
     private BlogRepo blogRepo;
 
     @Override
     public Account findAccount(Long id) {
-
         return accountRepo.findAccount(id);
     }
 
@@ -67,7 +73,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountList findAllAccounts() {
-
         return new AccountList(accountRepo.findAllAccounts());
     }
 

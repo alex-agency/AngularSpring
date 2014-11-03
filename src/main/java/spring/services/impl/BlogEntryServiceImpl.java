@@ -7,8 +7,11 @@ import spring.entities.BlogEntry;
 import spring.repositories.BlogEntryRepo;
 import spring.services.BlogEntryService;
 
+@Service
+@Transactional
 public class BlogEntryServiceImpl implements BlogEntryService {
 
+    @Autowired
     private BlogEntryRepo entryRepo;
 
     @Override

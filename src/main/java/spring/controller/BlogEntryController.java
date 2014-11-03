@@ -15,8 +15,8 @@ import spring.services.BlogEntryService;
 public class BlogEntryController {
     private BlogEntryService service;
 
-    public BlogEntryController(BlogEntryService service)
-    {
+    @Autowired
+    public BlogEntryController(BlogEntryService service) {
         this.service = service;
     }
 
