@@ -1,6 +1,5 @@
 package spring.services.util;
 
-
 import spring.entities.Account;
 
 import java.util.ArrayList;

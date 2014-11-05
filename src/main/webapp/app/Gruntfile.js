@@ -12,270 +12,270 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-conventional-changelog');
-  grunt.loadNpmTasks('grunt-bump');
-  grunt.loadNpmTasks('grunt-coffeelint');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-ngmin');
-  grunt.loadNpmTasks('grunt-html2js');
-
-  /**
-   * Load in our build configuration file.
-   */
-  var userConfig = require( './build.config.js' );
-
-  /**
-   * This is the configuration object Grunt uses to give each plugin its 
-   * instructions.
-   */
-  var taskConfig = {
-    /**
-     * We read in our `package.json` file so we can access the package name and
-     * version. It's already there, so we don't repeat ourselves here.
-     */
-    pkg: grunt.file.readJSON("package.json"),
+    grunt.loadNpmTasks('grunt-conventional-changelog');
+    grunt.loadNpmTasks('grunt-bump');
+    grunt.loadNpmTasks('grunt-coffeelint');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-ngmin');
+    grunt.loadNpmTasks('grunt-html2js');
 
     /**
-     * The banner is the comment that is placed at the top of our compiled 
-     * source files. It is first processed as a Grunt template, where the `<%=`
-     * pairs are evaluated based on this very configuration object.
+     * Load in our build configuration file.
      */
-    meta: {
-      banner: 
-        '/**\n' +
-        ' * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        ' * <%= pkg.homepage %>\n' +
-        ' *\n' +
-        ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-        ' * Licensed <%= pkg.licenses.type %> <<%= pkg.licenses.url %>>\n' +
-        ' */\n'
-    },
+    var userConfig = require( './build.config.js' );
 
     /**
-     * Creates a changelog on a new version.
+     * This is the configuration object Grunt uses to give each plugin its
+     * instructions.
      */
-    changelog: {
-      options: {
-        dest: 'CHANGELOG.md',
-        template: 'changelog.tpl'
-      }
-    },
+    var taskConfig = {
+        /**
+         * We read in our `package.json` file so we can access the package name and
+         * version. It's already there, so we don't repeat ourselves here.
+         */
+        pkg: grunt.file.readJSON("package.json"),
 
-    /**
-     * Increments the version number, etc.
-     */
-    bump: {
-      options: {
-        files: [
-          "package.json", 
-          "bower.json"
-        ],
-        commit: false,
-        commitMessage: 'chore(release): v%VERSION%',
-        commitFiles: [
-          "package.json", 
-          "client/bower.json"
-        ],
-        createTag: false,
-        tagName: 'v%VERSION%',
-        tagMessage: 'Version %VERSION%',
-        push: false,
-        pushTo: 'origin'
-      }
-    },    
-
-    /**
-     * The directories to delete when `grunt clean` is executed.
-     */
-    clean: [ 
-      '<%= build_dir %>', 
-      '<%= compile_dir %>'
-    ],
-
-    /**
-     * The `copy` task just copies files from A to B. We use it here to copy
-     * our project assets (images, fonts, etc.) and javascripts into
-     * `build_dir`, and then to copy the assets to `compile_dir`.
-     */
-    copy: {
-      build_app_assets: {
-        files: [
-          { 
-            src: [ '**' ],
-            dest: '<%= build_dir %>/assets/',
-            cwd: 'src/assets',
-            expand: true
-          }
-       ]   
-      },
-      build_vendor_assets: {
-        files: [
-          { 
-            src: [ '<%= vendor_files.assets %>' ],
-            dest: '<%= build_dir %>/assets/',
-            cwd: '.',
-            expand: true,
-            flatten: true
-          }
-       ]   
-      },
-      build_appjs: {
-        files: [
-          {
-            src: [ '<%= app_files.js %>' ],
-            dest: '<%= build_dir %>/',
-            cwd: '.',
-            expand: true
-          }
-        ]
-      },
-      build_vendorjs: {
-        files: [
-          {
-            src: [ '<%= vendor_files.js %>' ],
-            dest: '<%= build_dir %>/',
-            cwd: '.',
-            expand: true
-          }
-        ]
-      },
-      compile_assets: {
-        files: [
-          {
-            src: [ '**' ],
-            dest: '<%= compile_dir %>/assets',
-            cwd: '<%= build_dir %>/assets',
-            expand: true
-          }
-        ]
-      }
-    },
-
-    /**
-     * `grunt concat` concatenates multiple source files into a single file.
-     */
-    concat: {
-      /**
-       * The `build_css` target concatenates compiled CSS and vendor CSS
-       * together.
-       */
-      build_css: {
-        src: [
-          '<%= vendor_files.css %>',
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
-        ],
-        dest: '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
-      },
-      /**
-       * The `compile_js` target is the concatenation of our application source
-       * code and all specified vendor source code into a single file.
-       */
-      compile_js: {
-        options: {
-          banner: '<%= meta.banner %>'
+        /**
+         * The banner is the comment that is placed at the top of our compiled
+         * source files. It is first processed as a Grunt template, where the `<%=`
+         * pairs are evaluated based on this very configuration object.
+         */
+        meta: {
+            banner:
+                '/**\n' +
+                    ' * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                    ' * <%= pkg.homepage %>\n' +
+                    ' *\n' +
+                    ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                    ' * Licensed <%= pkg.licenses.type %> <<%= pkg.licenses.url %>>\n' +
+                    ' */\n'
         },
-        src: [ 
-          '<%= vendor_files.js %>', 
-          'module.prefix', 
-          '<%= build_dir %>/src/**/*.js', 
-          '<%= html2js.app.dest %>', 
-          '<%= html2js.common.dest %>', 
-          'module.suffix' 
+
+        /**
+         * Creates a changelog on a new version.
+         */
+        changelog: {
+            options: {
+                dest: 'CHANGELOG.md',
+                template: 'changelog.tpl'
+            }
+        },
+
+        /**
+         * Increments the version number, etc.
+         */
+        bump: {
+            options: {
+                files: [
+                    "package.json",
+                    "bower.json"
+                ],
+                commit: false,
+                commitMessage: 'chore(release): v%VERSION%',
+                commitFiles: [
+                    "package.json",
+                    "client/bower.json"
+                ],
+                createTag: false,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: false,
+                pushTo: 'origin'
+            }
+        },
+
+        /**
+         * The directories to delete when `grunt clean` is executed.
+         */
+        clean: [
+            '<%= build_dir %>',
+            '<%= compile_dir %>'
         ],
-        dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
-      }
-    },
 
-    /**
-     * `grunt coffee` compiles the CoffeeScript sources. To work well with the
-     * rest of the build, we have a separate compilation task for sources and
-     * specs so they can go to different places. For example, we need the
-     * sources to live with the rest of the copied JavaScript so we can include
-     * it in the final build, but we don't want to include our specs there.
-     */
-    coffee: {
-      source: {
-        options: {
-          bare: true
+        /**
+         * The `copy` task just copies files from A to B. We use it here to copy
+         * our project assets (images, fonts, etc.) and javascripts into
+         * `build_dir`, and then to copy the assets to `compile_dir`.
+         */
+        copy: {
+            build_app_assets: {
+                files: [
+                    {
+                        src: [ '**' ],
+                        dest: '<%= build_dir %>/assets/',
+                        cwd: 'src/assets',
+                        expand: true
+                    }
+                ]
+            },
+            build_vendor_assets: {
+                files: [
+                    {
+                        src: [ '<%= vendor_files.assets %>' ],
+                        dest: '<%= build_dir %>/assets/',
+                        cwd: '.',
+                        expand: true,
+                        flatten: true
+                    }
+                ]
+            },
+            build_appjs: {
+                files: [
+                    {
+                        src: [ '<%= app_files.js %>' ],
+                        dest: '<%= build_dir %>/',
+                        cwd: '.',
+                        expand: true
+                    }
+                ]
+            },
+            build_vendorjs: {
+                files: [
+                    {
+                        src: [ '<%= vendor_files.js %>' ],
+                        dest: '<%= build_dir %>/',
+                        cwd: '.',
+                        expand: true
+                    }
+                ]
+            },
+            compile_assets: {
+                files: [
+                    {
+                        src: [ '**' ],
+                        dest: '<%= compile_dir %>/assets',
+                        cwd: '<%= build_dir %>/assets',
+                        expand: true
+                    }
+                ]
+            }
         },
-        expand: true,
-        cwd: '.',
-        src: [ '<%= app_files.coffee %>' ],
-        dest: '<%= build_dir %>',
-        ext: '.js'
-      }
-    },
 
-    /**
-     * `ng-min` annotates the sources before minifying. That is, it allows us
-     * to code without the array syntax.
-     */
-    ngmin: {
-      compile: {
-        files: [
-          {
-            src: [ '<%= app_files.js %>' ],
-            cwd: '<%= build_dir %>',
-            dest: '<%= build_dir %>',
-            expand: true
-          }
-        ]
-      }
-    },
-
-    /**
-     * Minify the sources!
-     */
-    uglify: {
-      compile: {
-        options: {
-          banner: '<%= meta.banner %>'
+        /**
+         * `grunt concat` concatenates multiple source files into a single file.
+         */
+        concat: {
+            /**
+             * The `build_css` target concatenates compiled CSS and vendor CSS
+             * together.
+             */
+            build_css: {
+                src: [
+                    '<%= vendor_files.css %>',
+                    '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+                ],
+                dest: '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+            },
+            /**
+             * The `compile_js` target is the concatenation of our application source
+             * code and all specified vendor source code into a single file.
+             */
+            compile_js: {
+                options: {
+                    banner: '<%= meta.banner %>'
+                },
+                src: [
+                    '<%= vendor_files.js %>',
+                    'module.prefix',
+                    '<%= build_dir %>/src/**/*.js',
+                    '<%= html2js.app.dest %>',
+                    '<%= html2js.common.dest %>',
+                    'module.suffix'
+                ],
+                dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
+            }
         },
-        files: {
-          '<%= concat.compile_js.dest %>': '<%= concat.compile_js.dest %>'
-        }
-      }
-    },
 
-    /**
-     * `grunt-contrib-less` handles our LESS compilation and uglification automatically.
-     * Only our `main.less` file is included in compilation; all other files
-     * must be imported from this file.
-     */
-    less: {
-      build: {
-        files: {
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
-        }
-      },
-      compile: {
-        files: {
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
+        /**
+         * `grunt coffee` compiles the CoffeeScript sources. To work well with the
+         * rest of the build, we have a separate compilation task for sources and
+         * specs so they can go to different places. For example, we need the
+         * sources to live with the rest of the copied JavaScript so we can include
+         * it in the final build, but we don't want to include our specs there.
+         */
+        coffee: {
+            source: {
+                options: {
+                    bare: true
+                },
+                expand: true,
+                cwd: '.',
+                src: [ '<%= app_files.coffee %>' ],
+                dest: '<%= build_dir %>',
+                ext: '.js'
+            }
         },
-        options: {
-          cleancss: true,
-          compress: true
-        }
-      }
-    },
 
-    /**
-     * `jshint` defines the rules of our linter as well as which files we
-     * should check. This file, all javascript sources, and all our unit tests
-     * are linted based on the policies listed in `options`. But we can also
-     * specify exclusionary patterns by prefixing them with an exclamation
-     * point (!); this is useful when code comes from a third party but is
-     * nonetheless inside `src/`.
-     */
-    jshint: {
-      src: [ 
-        '<%= app_files.js %>'
-      ],
-      test: [
-        '<%= app_files.jsunit %>'
-      ],
-      gruntfile: [
-        'Gruntfile.js'
+        /**
+         * `ng-min` annotates the sources before minifying. That is, it allows us
+         * to code without the array syntax.
+         */
+        ngmin: {
+            compile: {
+                files: [
+                    {
+                        src: [ '<%= app_files.js %>' ],
+                        cwd: '<%= build_dir %>',
+                        dest: '<%= build_dir %>',
+                        expand: true
+                    }
+                ]
+            }
+        },
+
+        /**
+         * Minify the sources!
+         */
+        uglify: {
+            compile: {
+                options: {
+                    banner: '<%= meta.banner %>'
+                },
+                files: {
+                    '<%= concat.compile_js.dest %>': '<%= concat.compile_js.dest %>'
+                }
+            }
+        },
+
+        /**
+         * `grunt-contrib-less` handles our LESS compilation and uglification automatically.
+         * Only our `main.less` file is included in compilation; all other files
+         * must be imported from this file.
+         */
+        less: {
+            build: {
+                files: {
+                    '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
+                }
+            },
+            compile: {
+                files: {
+                    '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
+                },
+                options: {
+                    cleancss: true,
+                    compress: true
+                }
+            }
+        },
+
+        /**
+         * `jshint` defines the rules of our linter as well as which files we
+         * should check. This file, all javascript sources, and all our unit tests
+         * are linted based on the policies listed in `options`. But we can also
+         * specify exclusionary patterns by prefixing them with an exclamation
+         * point (!); this is useful when code comes from a third party but is
+         * nonetheless inside `src/`.
+         */
+        jshint: {
+            src: [
+                '<%= app_files.js %>'
+            ],
+            test: [
+                '<%= app_files.jsunit %>'
+            ],
+            gruntfile: [
+                'Gruntfile.js'
       ],
       options: {
         curly: true,
